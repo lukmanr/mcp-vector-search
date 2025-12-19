@@ -7,6 +7,12 @@ from mcp_vector_search.core.git import (
     GitNotRepoError,
     GitReferenceError,
 )
+from mcp_vector_search.core.registry import (
+    MultiRepoContext,
+    RepoInfo,
+    RepoRegistry,
+    get_central_index_path,
+)
 
 __all__ = [
     "GitError",
@@ -14,4 +20,8 @@ __all__ = [
     "GitNotAvailableError",
     "GitNotRepoError",
     "GitReferenceError",
+    "MultiRepoContext",
+    "RepoInfo",
+    "RepoRegistry",
+    "get_central_index_path",
 ]

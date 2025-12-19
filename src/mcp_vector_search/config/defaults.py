@@ -1,5 +1,6 @@
 """Default configurations for MCP Vector Search."""
 
+import os
 from pathlib import Path
 
 # Dotfiles that should NEVER be skipped (CI/CD configurations)
@@ -198,3 +199,29 @@ def get_similarity_threshold(language: str) -> float:
 def get_chunk_size(language: str) -> int:
     """Get the default chunk size for a language."""
     return DEFAULT_CHUNK_SIZES.get(language.lower(), DEFAULT_CHUNK_SIZES["default"])
+
+
+def get_central_index_path() -> Path:
+    """Get the central index path for multi-repo mode.
+
+    Priority:
+    1. MCP_CENTRAL_INDEX_PATH environment variable
+    2. ~/.velocity/vector-search/ (default)
+
+    Returns:
+        Path to central index directory
+    """
+    env_path = os.getenv("MCP_CENTRAL_INDEX_PATH")
+    if env_path:
+        return Path(env_path).resolve()
+    return Path.home() / ".velocity" / "vector-search"
+
+
+def get_central_registry_path() -> Path:
+    """Get the path to the central registry file."""
+    return get_central_index_path() / "registry.json"
+
+
+def get_central_chroma_path() -> Path:
+    """Get the path to the central ChromaDB persistence directory."""
+    return get_central_index_path() / "chroma"
