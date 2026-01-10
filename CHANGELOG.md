@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.19] - 2026-01-08
+
+### Fixed
+- **CI Pipeline Improvements** - Better reliability and error handling
+  - Install package before running performance tests
+  - Skip existing PyPI uploads (don't fail if version already published)
+
+## [1.1.18] - 2026-01-08
+
+### Fixed
+- **CI Pipeline Reliability** - Multiple CI/CD fixes for better reliability
+  - Don't fail build on Codecov rate limits (non-critical service)
+  - Create venv for integration tests (PEP 668 compliance)
+  - Make init command non-interactive in integration tests
+  - Correct search command argument order in integration tests
+
+## [1.1.17] - 2026-01-07
+
+### Fixed
+- **Visualization Node Convergence Bug** - Fixed missing link types in D3 force simulation
+  - Added `subproject_containment` and `dependency` link types to D3 visualization
+  - Previously missing link types caused nodes to not converge to stable positions
+  - Force simulation now properly recognizes all relationship types
+  - Fixes erratic node movement and improves graph stability
+
+### CI/CD
+- **Streamlined CI Pipeline** - Reduced CI complexity and removed ineffective checks
+  - Simplified test matrix to ubuntu-latest + Python 3.11 only
+  - Removed broken documentation check job
+  - Removed ineffective security job (used `|| true` making it always pass)
+  - Made performance benchmarks release-only to reduce CI load
+  - Removed duplicate pytest.ini (consolidated to pyproject.toml config)
+
+## [1.1.16] - 2026-01-07
+
+### Performance
+- **Async Relationship Computation During Startup** - Non-blocking relationship processing
+  - Changed default indexing behavior to mark relationships for background computation instead of blocking
+  - Indexing now completes immediately without waiting for relationship computation
+  - Relationships computed asynchronously during background processing or on-demand
+  - Expected 2-5x faster initial indexing completion for large codebases
+
+### Added
+- **On-Demand Relationship Computation** - New command for manual relationship processing
+  - New `mcp-vector-search index relationships` command for on-demand computation
+  - `--background` flag for non-blocking relationship computation
+  - `--relationships-only` mode in background indexer for targeted computation
+  - Separate progress tracking for indexing vs relationship computation
+- **CLI Alias** - Better UX for common commands
+  - Added "ask" as alias for "chat" command
+
+### Fixed
+- Removed unused variable assignments in relationship computation code
+
+## [1.1.15] - 2025-12-30
+
+### Fixed
+- **MCP Setup Command** - Removed hardcoded project path from MCP registration
+  - Setup command was storing absolute project paths in ~/.claude.json causing stale configurations
+  - MCP server now correctly resolves project path dynamically at runtime
+  - Prevents "project not found" errors when moving or sharing configurations
+
 ## [1.1.14] - 2025-12-20
 
 ### Added
